@@ -6,9 +6,31 @@ pipeline{
     }
 
     stages{
-        stage("Build"){
+
+        stage("Test"){
             steps{
-                sh 'mvn -B -DskipTests clean package'
+               echo "Testing the app !"
+            }
+        }
+        
+        stage("Build"){
+            when {
+                expression {
+                    BRANCH_NAME == "main"
+                }
+            }
+            steps{
+               echo "Building the app !"
+            }
+        }
+         stage("Deploy"){
+              when {
+                expression {
+                    BRANCH_NAME == "main"
+                }
+            }
+            steps{
+               echo "Building the app !"
             }
         }
     }
